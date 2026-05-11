@@ -20,4 +20,21 @@ impl BillTracker {
             data_file: path.to_string(),
         })
     }
+
+    fn load(path: &str) -> Result<Vec<Bill>, io::Error> {
+        if !Path::new(path).exists() {
+            return Ok(Vec::new());
+        }
+        let file   = File::open(path)?;
+        let reader = BufReader::new(file);
+        let bills  = reader
+            .lines()
+            .filter_map(|result| {
+                let line = result.ok()?;
+                if line.trim().is_empty() { return None; }
+                Bill::from_csv_row(&line).ok()
+            })
+            .collect();
+        Ok(bills)
+    }
 }
