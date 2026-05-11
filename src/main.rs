@@ -58,3 +58,16 @@ fn handle_add(tracker: &mut BillTracker) {
         Err(e)   => println!("\nFailed to save: {}", e),
     }
 }
+
+fn handle_view(tracker: &BillTracker) {
+    let bills = tracker.view_all();
+    if bills.is_empty() {
+        println!("\nNo bills recorded.");
+        return;
+    }
+    println!();
+    for bill in bills {
+        println!("  {}", bill);
+    }
+    println!("\n  --- {} bill(s) ---", bills.len());
+}
