@@ -37,4 +37,13 @@ impl BillTracker {
             .collect();
         Ok(bills)
     }
+
+    fn save(&self) -> Result<(), io::Error> {
+        let file       = File::create(&self.data_file)?;
+        let mut writer = BufWriter::new(file);
+        for bill in &self.bills {
+            writeln!(writer, "{}", bill.to_csv_row())?;
+        }
+        Ok(())
+    }
 }
