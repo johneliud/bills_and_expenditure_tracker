@@ -71,4 +71,24 @@ impl BillTracker {
     pub fn total(&self) -> f64 {
         self.bills.iter().map(|b| b.amount).sum()
     }
+
+    pub fn edit(
+        &mut self,
+        id: u32,
+        name: Option<String>,
+        amount: Option<f64>,
+        category: Option<Category>,
+    ) -> Result<Option<&Bill>, io::Error> {
+        let pos = self.bills.iter().position(|b| b.id == id);
+        match pos {
+            None    => Ok(None),
+            Some(i) => {
+                if let Some(n) = name     { self.bills[i].name     = n; }
+                if let Some(a) = amount   { self.bills[i].amount   = a; }
+                if let Some(c) = category { self.bills[i].category = c; }
+                self.save()?;
+                Ok(Some(&self.bills[i]))
+            }
+        }
+    }
 }
