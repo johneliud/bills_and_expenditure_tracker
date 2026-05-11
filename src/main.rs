@@ -94,3 +94,16 @@ fn handle_update(tracker: &mut BillTracker) {
         Err(e)         => println!("\nSave error: {}", e),
     }
 }
+
+fn handle_remove(tracker: &mut BillTracker) {
+    let id_str = cli::prompt("Bill ID to remove");
+    let id = match id_str.trim().parse::<u32>() {
+        Ok(n)  => n,
+        Err(_) => { println!("Invalid ID."); return; }
+    };
+    match tracker.remove(id) {
+        Ok(Some(bill)) => println!("\nRemoved: {}", bill),
+        Ok(None)       => println!("\nNo bill with ID {}.", id),
+        Err(e)         => println!("\nSave error: {}", e),
+    }
+}
