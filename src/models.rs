@@ -36,4 +36,11 @@ impl Category {
             _ => Err(format!("'{}' is not a valid menu choice (1–6)", choice)),
         }
     }
+
+    pub fn to_file_str(&self) -> String {
+        match self {
+            Category::Other(name) => name.clone(),
+            other                 => format!("{}", other),
+        }
+    }
 }
