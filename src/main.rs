@@ -71,3 +71,26 @@ fn handle_view(tracker: &BillTracker) {
     }
     println!("\n  --- {} bill(s) ---", bills.len());
 }
+
+fn handle_update(tracker: &mut BillTracker) {
+    let id_str = cli::prompt("Bill ID to update");
+    let id = match id_str.trim().parse::<u32>() {
+        Ok(n)  => n,
+        Err(_) => { println!("Invalid ID."); return; }
+    };
+
+    if tracker.find_by_id(id).is_none() {
+        println!("\nNo bill with ID {}.", id);
+        return;
+    }
+
+    let name     = cli::read_optional_string("Name");
+    let amount   = cli::read_optional_amount();
+    let category = cli::read_optional_category();
+
+    match tracker.edit(id, name, amount, category) {
+        Ok(Some(bill)) => println!("\nUpdated: {}", bill),
+        Ok(None)       => println!("\nBill not found."),
+        Err(e)         => println!("\nSave error: {}", e),
+    }
+}
