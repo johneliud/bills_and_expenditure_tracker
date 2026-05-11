@@ -8,3 +8,9 @@ pub fn prompt(label: &str) -> String {
     io::stdin().read_line(&mut input).unwrap();
     input.trim().to_string()
 }
+
+pub fn read_amount() -> Result<f64, String> {
+    let raw = prompt("Amount");
+    raw.parse::<f64>()
+       .map_err(|e| format!("Invalid amount '{}': {}", raw, e))
+}
