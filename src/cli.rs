@@ -39,3 +39,14 @@ pub fn read_optional_amount() -> Option<f64> {
         raw.parse::<f64>().ok()
     }
 }
+
+pub fn read_optional_category() -> Option<Category> {
+    let skip = prompt("Change category? [y/N]");
+    if skip.trim().to_lowercase() != "y" {
+        return None;
+    }
+    match read_category() {
+        Ok(cat) => Some(cat),
+        Err(_)  => None,
+    }
+}
