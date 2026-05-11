@@ -25,3 +25,8 @@ pub fn read_category() -> Result<Category, String> {
     };
     Category::from_menu(&choice, custom)
 }
+
+pub fn read_optional_string(label: &str) -> Option<String> {
+    let val = prompt(&format!("{} (blank = keep)", label));
+    if val.is_empty() { None } else { Some(val) }
+}
