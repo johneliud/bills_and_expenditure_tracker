@@ -27,3 +27,14 @@ impl Command {
         }
     }
 }
+
+fn print_menu() {
+    println!();
+    println!("== Manage Bills ==\n");
+    println!("1. Add bill");
+    println!("2. View bills");
+    println!("3. Remove bill");
+    println!("4. Update bill");
+    println!("5. Bill total");
+    println!("\nPress '0', 'q' or 'CTRL + C' to exit");
+}
