@@ -38,3 +38,23 @@ fn print_menu() {
     println!("5. Bill total");
     println!("\nPress '0', 'q' or 'CTRL + C' to exit");
 }
+
+fn handle_add(tracker: &mut BillTracker) {
+    let name = cli::prompt("\nName");
+    if name.is_empty() {
+        println!("Name cannot be empty.");
+        return;
+    }
+    let amount = match cli::read_amount() {
+        Ok(a)  => a,
+        Err(e) => { println!("Error: {}", e); return; }
+    };
+    let category = match cli::read_category() {
+        Ok(c)  => c,
+        Err(e) => { println!("Error: {}", e); return; }
+    };
+    match tracker.add(name, amount, category) {
+        Ok(bill) => println!("\nAdded: {}", bill),
+        Err(e)   => println!("\nFailed to save: {}", e),
+    }
+}
