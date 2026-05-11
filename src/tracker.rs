@@ -91,4 +91,16 @@ impl BillTracker {
             }
         }
     }
+
+    pub fn remove(&mut self, id: u32) -> Result<Option<Bill>, io::Error> {
+        let pos = self.bills.iter().position(|b| b.id == id);
+        match pos {
+            None    => Ok(None),
+            Some(i) => {
+                let removed = self.bills.remove(i);
+                self.save()?;
+                Ok(Some(removed))
+            }
+        }
+    }
 }
