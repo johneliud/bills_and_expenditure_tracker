@@ -46,4 +46,17 @@ impl BillTracker {
         }
         Ok(())
     }
+
+    pub fn add(
+        &mut self,
+        name: String,
+        amount: f64,
+        category: Category,
+    ) -> Result<&Bill, io::Error> {
+        let bill = Bill { id: self.next_id, name, amount, category };
+        self.next_id += 1;
+        self.bills.push(bill);
+        self.save()?;
+        Ok(self.bills.last().unwrap())
+    }
 }
