@@ -107,3 +107,12 @@ fn handle_remove(tracker: &mut BillTracker) {
         Err(e)         => println!("\nSave error: {}", e),
     }
 }
+
+fn handle_total(tracker: &BillTracker) {
+    let bills = tracker.view_all();
+    if bills.is_empty() {
+        println!("\nNo bills recorded.");
+    } else {
+        println!("\nTotal: KES{:.2}", tracker.total());
+    }
+}
