@@ -57,4 +57,18 @@ impl fmt::Display for Category {
         }
     }
 }
+
+#[derive(Debug, Clone)]
+pub struct Bill {
+    pub id:       u32,
+    pub name:     String,
+    pub amount:   f64,
+    pub category: Category,
+}
+
+impl Bill {
+    pub fn to_csv_row(&self) -> String {
+        format!("{}|{}|{:.2}|{}", self.id, self.name, self.amount, self.category.to_file_str())
+    }
+    }
 }
