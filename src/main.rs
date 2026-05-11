@@ -116,3 +116,27 @@ fn handle_total(tracker: &BillTracker) {
         println!("\nTotal: KES{:.2}", tracker.total());
     }
 }
+
+fn main() {
+    let mut tracker = match BillTracker::new("bills.dat") {
+        Ok(t)  => t,
+        Err(e) => {
+            eprintln!("Failed to load data: {}", e);
+            std::process::exit(1);
+        }
+    };
+
+    loop {
+        print_menu();
+        let input = cli::prompt("Enter selection");
+        match Command::from_input(&input) {
+            Command::Add    => handle_add(&mut tracker),
+            Command::View   => handle_view(&tracker),
+            Command::Remove => handle_remove(&mut tracker),
+            Command::Update => handle_update(&mut tracker),
+            Command::Total  => handle_total(&tracker),
+            Command::Quit   => { println!("Bye!"); break; }
+            Command::Unknown(s) => println!("\nInvalid selection '{}'. Enter 1-5.", s),
+        }
+    }
+}
