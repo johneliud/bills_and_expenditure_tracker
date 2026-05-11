@@ -14,3 +14,14 @@ pub fn read_amount() -> Result<f64, String> {
     raw.parse::<f64>()
        .map_err(|e| format!("Invalid amount '{}': {}", raw, e))
 }
+
+pub fn read_category() -> Result<Category, String> {
+    println!("  [1] Food  [2] Utilities  [3] Transport  [4] Entertainment  [5] Healthcare  [6] Other");
+    let choice = prompt("Category");
+    let custom = if choice.trim() == "6" {
+        Some(prompt("Custom category name"))
+    } else {
+        None
+    };
+    Category::from_menu(&choice, custom)
+}
