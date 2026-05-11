@@ -82,5 +82,10 @@ impl Bill {
         let category = Category::from_str(parts[3])?;
         Ok(Bill { id, name, amount, category })
     }
+}
+
+impl fmt::Display for Bill {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "#{}: {} - KES{:.2} ({})", self.id, self.name, self.amount, self.category)
     }
 }
