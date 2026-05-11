@@ -44,3 +44,17 @@ impl Category {
         }
     }
 }
+
+impl fmt::Display for Category {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Category::Food          => write!(f, "Food"),
+            Category::Utilities     => write!(f, "Utilities"),
+            Category::Transport     => write!(f, "Transport"),
+            Category::Entertainment => write!(f, "Entertainment"),
+            Category::Healthcare    => write!(f, "Healthcare"),
+            Category::Other(name)   => write!(f, "{}", name),
+        }
+    }
+}
+}
