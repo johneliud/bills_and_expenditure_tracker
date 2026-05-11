@@ -30,3 +30,12 @@ pub fn read_optional_string(label: &str) -> Option<String> {
     let val = prompt(&format!("{} (blank = keep)", label));
     if val.is_empty() { None } else { Some(val) }
 }
+
+pub fn read_optional_amount() -> Option<f64> {
+    let raw = prompt("Amount (blank = keep)");
+    if raw.is_empty() {
+        None
+    } else {
+        raw.parse::<f64>().ok()
+    }
+}
