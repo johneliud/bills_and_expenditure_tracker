@@ -59,4 +59,16 @@ impl BillTracker {
         self.save()?;
         Ok(self.bills.last().unwrap())
     }
+
+    pub fn view_all(&self) -> &[Bill] {
+        &self.bills
+    }
+
+    pub fn find_by_id(&self, id: u32) -> Option<&Bill> {
+        self.bills.iter().find(|b| b.id == id)
+    }
+
+    pub fn total(&self) -> f64 {
+        self.bills.iter().map(|b| b.amount).sum()
+    }
 }
