@@ -70,5 +70,17 @@ impl Bill {
     pub fn to_csv_row(&self) -> String {
         format!("{}|{}|{:.2}|{}", self.id, self.name, self.amount, self.category.to_file_str())
     }
+
+    pub fn from_csv_row(line: &str) -> Result<Self, String> {
+        let parts: Vec<&str> = line.splitn(4, '|').collect();
+        if parts.len() != 4 {
+            return Err(format!("Malformed row: '{}'", line));
+        }
+        let id       = parts[0].parse::<u32>().map_err(|e| e.to_string())?;
+        let name     = parts[1].to_string();
+        let amount   = parts[2].parse::<f64>().map_err(|e| e.to_string())?;
+        let category = Category::from_str(parts[3])?;
+        Ok(Bill { id, name, amount, category })
+    }
     }
 }
